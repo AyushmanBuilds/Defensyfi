@@ -61,9 +61,7 @@ def scan_network():
     ip = get_own_ip()
 
     try:
-        param = "-n" if platform.system().lower() == "windows" else "-c"
-        subprocess.check_output(["ping", param, "1", ip], stderr=subprocess.DEVNULL)
-
+        # ⚠️ Removed ping check (doesn't work on cloud servers)
         open_ports = scan_ports(ip)
         risk = assess_risk(open_ports)
 
@@ -75,8 +73,8 @@ def scan_network():
             "risk": risk
         })
 
-    except subprocess.CalledProcessError:
-        pass
+    except Exception as e:
+        print(f"[Error] Failed to scan network: {e}")
 
     return devices
 
