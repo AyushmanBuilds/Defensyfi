@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/img/Contemporary Logo with Orange for DefensyFi.png" type="image/x-icon">
+  <title>DefensyFi by Ayushman</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <nav>
+    <h1><b>DefensyFi</b></h1>
+  </nav>
+
+  <main>
+    <section class="controls">
+      <button id="scanBtn">🔍 Scan Network</button>
+      <div id="loadingText" style="color: #00f0ff; display: none; margin-top: 10px;">
+  🔍 Scanning network 🔍, please wait...
+     </div>
+    </section>
+
+    <section class="stats">
+      <div class="chart-card">
+        <canvas id="deviceChart"></canvas>
+        <p>Connected Devices</p>
+      </div>
+      <div class="chart-card">
+        <canvas id="riskChart"></canvas>
+        <p>Risk Levels</p>
+      </div>
+    </section>
+
+    <section class="devices">
+      <h2>Detected Devices</h2>
+      <div id="deviceList" class="device-grid"></div>
+    </section>
+
+    <section class="logs">
+      <h2>Scan Log</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>IP</th>
+            <th>Status</th>
+            <th>Mac Address</th>
+            <th>Open Ports</th>
+            <th>Risk</th>
+          </tr>
+        </thead>
+        <tbody id="logTable"></tbody>
+      </table>
+    </section>
+
+    <div id="networkInfo" class="network-info-box">
+  <h4>Current Network Info</h4>
+  <p><strong>IP Address:</strong> <span id="ipAddress">-</span></p>
+  <p><strong>Subnet:</strong> <span id="subnet">-</span></p>
+  <p><strong>Hostname:</strong> <span id="hostname">-</span></p>
+</div>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

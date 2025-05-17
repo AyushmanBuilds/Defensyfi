@@ -1,0 +1,95 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: radial-gradient(circle at top left, #0f2027, #203a43, #2c5364);
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+nav {
+  background: #1e3c72;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 0 10px #00f0ff;
+}
+
+nav h1 {
+  margin: 0;
+  color: #00f0ff;
+}
+
+main {
+  padding: 2rem;
+}
+
+.controls {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+button#scanBtn {
+  background-color: #00f0ff;
+  color: #000;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 0 10px #00f0ff;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.chart-card {
+  width: 300px;
+  background: #1b2735;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px #00f0ff;
+  text-align: center;
+}
+
+.devices {
+  margin-top: 2rem;
+}
+
+.device-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.device-card {
+  background: #102030;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px #00f0ff88;
+}
+
+.logs table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.logs th, .logs td {
+  border: 1px solid #00f0ff55;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.quarantine-card {
+  background-color: #330000;
+  border: 1px solid #ff4d4d;
+  padding: 16px;
+  margin: 10px 0;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: bold;
+  box-shadow: 0 0 10px #ff4d4d55;
+}
