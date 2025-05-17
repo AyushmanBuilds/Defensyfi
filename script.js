@@ -10,7 +10,7 @@ function startRealScan() {
   logTable.innerHTML = "";
   loadingText.style.display = "block";
 
-  fetch("http://localhost:5000/devices")
+  fetch("https://defensyfi.onrender.com/devices")
     .then(response => {
       if (!response.ok) {
         throw new Error("Failed to fetch");
@@ -131,7 +131,7 @@ function updateCharts(devices) {
 }
 
 function fetchNetworkInfo() {
-  fetch("http://localhost:5000/network-info")
+  fetch("https://defensyfi.onrender.com/devices")
     .then(res => res.json())
     .then(info => {
       document.getElementById("ipAddress").textContent = info.ip_address;
