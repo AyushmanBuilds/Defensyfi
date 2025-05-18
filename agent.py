@@ -1,5 +1,3 @@
-import subprocess
-import platform
 import socket
 import uuid
 import os
@@ -7,7 +5,7 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)  # ✅ Enable CORS globally
+CORS(app)
 
 # ------------------------------ Port Scanner ------------------------------
 def scan_ports(ip):
@@ -21,18 +19,19 @@ def scan_ports(ip):
     for port, service in common_ports.items():
         try:
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-                sock.settimeout(0.3)
+                sock.settimeout(1.0)  # Increased timeout
                 if sock.connect_ex((ip, port)) == 0:
                     open_ports.append(f"{port} ({service})")
-        except Exception:
-            pass
+        except Exception as e:
+            print(f"[Port Scan Error] {e}")
     return open_ports
+
 
 # ------------------------------ Get Own IP ------------------------------
 def get_own_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
-        s.connect(("10.255.255.255", 1))
+        s.connect(("8.8.8.8", 80))
         ip = s.getsockname()[0]
     except Exception:
         ip = "127.0.0.1"
@@ -42,7 +41,7 @@ def get_own_ip():
 
 # ------------------------------ Risk Assessment ------------------------------
 def assess_risk(open_ports):
-    high_risk_ports = ["21", "23", "445", "3389"]  # FTP, Telnet, SMB, RDP
+    high_risk_ports = ["21", "23", "139", "445", "3389"]
     if any(port.split()[0] in high_risk_ports for port in open_ports):
         return "High"
     elif open_ports:
@@ -61,10 +60,8 @@ def scan_network():
     ip = get_own_ip()
 
     try:
-        # ⚠️ Removed ping check (doesn't work on cloud servers)
         open_ports = scan_ports(ip)
         risk = assess_risk(open_ports)
-
         devices.append({
             "ip": ip,
             "status": "online",
@@ -72,7 +69,6 @@ def scan_network():
             "mac": get_own_mac(),
             "risk": risk
         })
-
     except Exception as e:
         print(f"[Error] Failed to scan network: {e}")
 
@@ -81,10 +77,15 @@ def scan_network():
 # ------------------------------ Current Network Info ------------------------------
 def get_current_ip_info():
     try:
-        hostname = socket.gethostname()
-        ip_address = socket.gethostbyname(hostname)
+        # Get IP using a real outbound route
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        ip_address = s.getsockname()[0]
+        s.close()
+
         subnet_parts = ip_address.split('.')
         subnet = ".".join(subnet_parts[:3]) + ".x"
+        hostname = socket.getfqdn()
 
         return {
             "hostname": hostname,
@@ -106,3 +107,4 @@ def get_devices():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
+
