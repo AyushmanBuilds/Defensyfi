@@ -131,18 +131,22 @@ function updateCharts(devices) {
 }
 
 function fetchNetworkInfo() {
-  fetch("https://defensyfi.onrender.com/devices")
+  fetch("https://defensyfi.onrender.com/network-info")  // ← correct endpoint!
     .then(res => res.json())
     .then(info => {
       document.getElementById("ipAddress").textContent = info.ip_address;
       document.getElementById("subnet").textContent = info.subnet;
       document.getElementById("hostname").textContent = info.hostname;
+    })
+    .catch(err => {
+      console.error("Failed to load network info:", err);
     });
 }
 
 window.onload = function() {
   fetchNetworkInfo();  // call on page load
 }
+
 
 
 
